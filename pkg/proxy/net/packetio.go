@@ -202,3 +202,7 @@ func (p *PacketIO) UpgradeToClientTLS(tlsConfig *tls.Config) error {
 	p.SetBufferedReadConn(bufReadConn)
 	return nil
 }
+
+func (p *PacketIO) Close() error {
+	return p.bufReadConn.Close()
+}
