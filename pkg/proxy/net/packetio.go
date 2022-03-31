@@ -186,7 +186,7 @@ func (p *PacketIO) Flush() error {
 func (p *PacketIO) UpgradeToServerTLS(tlsConfig *tls.Config) error {
 	tlsConn := tls.Server(p.bufReadConn, tlsConfig)
 	if err := tlsConn.Handshake(); err != nil {
-		return err
+		return errors.Trace(err)
 	}
 	bufReadConn := NewBufferedReadConn(tlsConn)
 	p.SetBufferedReadConn(bufReadConn)
@@ -196,7 +196,7 @@ func (p *PacketIO) UpgradeToServerTLS(tlsConfig *tls.Config) error {
 func (p *PacketIO) UpgradeToClientTLS(tlsConfig *tls.Config) error {
 	tlsConn := tls.Client(p.bufReadConn, tlsConfig)
 	if err := tlsConn.Handshake(); err != nil {
-		return err
+		return errors.Trace(err)
 	}
 	bufReadConn := NewBufferedReadConn(tlsConn)
 	p.SetBufferedReadConn(bufReadConn)
